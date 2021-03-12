@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>简知乎</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="/static/css/bootstrap.css" />
+		<script src="/static/js/jquery.js"></script>
+		<!-- <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.js"></script> -->
+		<style>
+			.active {
+				opacity: 1 !important;
+				color: #0f88eb !important;
+				border-bottom: 2px solid #0f88eb !important;
+			}
+			
+			.select {
+				text-decoration: none !important;
+				color: rgb(85, 85, 85);
+				opacity: .7;
+				line-height: 35px;
+				padding-bottom: 5px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<div class="col-md-4 col-md-offset-4" style="text-align: center;margin-bottom:30px;">
+			<div style="font-size: 55px;color: #0F88EB;margin-top:10%;margin-bottom:5%;">简知乎</div>
+			<div style="font-size:18px;color: #555;margin: 5% 0px;">与世界分享你的知识、经验和见解</div>
+			<div style="margin: 7%;font-size: 18px;width: 50%;margin-left: 50%;transform: translate(-50%,0);">
+				
+				{% ifequal status "login" %}
+				<div style="display: inline-block;width: 30%;">
+					<a id="login-click" class="select active">登陆</a>
+				</div>
+				<div style="display: inline-block;width: 30%;">
+					<a id="register-click" class="select">注册</a>
+				</div>
+				{% else %}
+				<div style="display: inline-block;width: 30%;">
+					<a id="login-click" class="select">登陆</a>
+				</div>
+				<div style="display: inline-block;width: 30%;">
+					<a id="register-click" class="select active">注册</a>
+				</div>
+				{%endifequal%}
+				
+			</div>
+			<!-- <div id="login" > -->
+<!-- 		  		
+				<input type="text" class="form-control" placeholder="手机号或邮箱" style="width: 75% !important;margin-left: 50%;transform: translate(-50%, 0);height: 50px;width: 300px;border-radius: 2px 2px 0px 0px;">
+				<input type="password" class="form-control" placeholder="密码" style="margin-bottom:5%;width: 75% !important;margin-left: 50%;transform: translate(-50%, 0);height: 50px;width: 300px;border-radius: 0px 0px 2px 2px;">
+				<button class="btn btn-default" style="width: 75%;background-color: #0f88eb;color: white;font-size: 18px;">登陆</button>
+			</div> -->
+			<!-- 如果是login 展示 -->
+			{% if status == "login" %}
+			<form action="/login/" method="post" id="login">
+				<div style="display: inline-block;width: 30%;">
+					<a id="login-click" class="select active">登陆</a>
+				</div>
+			<!-- 如果是login 隐藏 -->	
+			{% else  %}
+			<form action="/login/" method="post" id="login" class="hidden">
+			{% endif %}
+				<input name = "username" type="text" class="form-control" placeholder="手机号或邮箱" style="width: 75% !important;margin-left: 50%;transform: translate(-50%, 0);height: 50px;width: 300px;border-radius: 2px 2px 0px 0px;">
+				<input name ="password" type="password" class="form-control" placeholder="密码" style="margin-bottom:5%;width: 75% !important;margin-left: 50%;transform: translate(-50%, 0);height: 50px;width: 300px;border-radius: 0px 0px 2px 2px;">
+				<!-- {{form.as_p}} -->
+				<!-- {{form.error_messages}} -->
+				{% csrf_token %}
+				<button class="btn btn-default" style="width: 75%;background-color: #0f88eb;color: white;font-size: 18px;">登陆</button>
+			
+				<!-- <button type="submit">登录</button> -->
+			  </form>
+			
+			  <!-- 如果是login 隐藏 -->	
+			  {% if status == "login" %}
+			<form action="/register/" method="post" id="register" class="hidden">
+			  <!-- 如果不是login，那么就是register 展现 -->	
+				{% elif status == "register" %}
+			<form action="/register/" method="post" id="register">
+			{% endif %}
+				<input name = "username" type="text" class="form-control" placeholder="手机号或邮箱" style="width: 75% !important;margin-left: 50%;transform: translate(-50%, 0);height: 50px;width: 300px;border-radius: 2px 2px 0px 0px;">
+				<input name ="password1" type="password" class="form-control" placeholder="密码" style="margin-bottom:5%;width: 75% !important;margin-left: 50%;transform: translate(-50%, 0);height: 50px;width: 300px;border-radius: 0px 0px 2px 2px;">
+				<input name ="password2" type="password" class="form-control" placeholder="密码" style="margin-bottom:5%;width: 75% !important;margin-left: 50%;transform: translate(-50%, 0);height: 50px;width: 300px;border-radius: 0px 0px 2px 2px;">
+				<!-- {{form.as_p}} -->
+				<!-- {{form.error_messages}} -->
+				{% csrf_token %}
+				<button type="submit" class="btn btn-default" style="width: 75%;background-color: #0f88eb;color: white;font-size: 18px;">注册知乎</button>
+
+				<!-- <button type="submit">注册</button> -->
+		  </form>
+		
+			<!-- <div id="register" class="hidden">
+				<input type="text" class="form-control" placeholder="姓名" style="width: 75%;margin-left: 50%;transform: translate(-50%, 0);height: 50px;width: 300px;border-radius: 2px 2px 0px 0px;">
+				<input type="text" class="form-control" placeholder="手机号" style="width: 75%;margin-left: 50%;transform: translate(-50%, 0);height: 50px;width: 300px;border-radius: 0px 0px 0px 0px;">
+				<input type="password" class="form-control" placeholder="密码" style="margin-bottom:5%;width: 75%;margin-left: 50%;transform: translate(-50%, 0);height: 50px;width: 300px;border-radius: 0px 0px 2px 2px;">
+				
+				<button class="btn btn-default" style="width: 75%;background-color: #0f88eb;color: white;font-size: 18px;">注册知乎</button>
+			</div> -->
+		</div>
+		<script>
+			$(document).ready(function () { 
+
+				$('#login-click').click(function(){
+					$('#login-click').addClass("active");
+					$('#login').removeClass('hidden');
+					$('#register-click').removeClass("active");
+					$('#register').addClass('hidden');
+				})
+				$('#register-click').click(function(){
+					$('#login-click').removeClass("active");
+					$('#login').addClass('hidden');
+					$('#register-click').addClass("active");
+					$('#register').removeClass('hidden');
+				})
+			});
+		</script>
+		<div class="canvas-show" style="top: 0;position: fixed;overflow: hidden;z-index:-1;background-color: #F7FAFC;">
+			<canvas id="canvas" style="display: inline-block;"></canvas>
+		</div>
+		<script>
+		function show_canvas(){
+		//定义画布宽高和生成点的个数
+			var WIDTH = window.innerWidth, HEIGHT = window.innerHeight, POINT = 12;
+			
+			var canvas = document.getElementById('canvas');
+			canvas.width = WIDTH,
+			canvas.height = HEIGHT;
+			var context = canvas.getContext('2d');
+			context.strokeStyle = 'rgba(0,0,0,0.02)',
+			context.strokeWidth = 1,
+			context.fillStyle = 'rgba(0,0,0,0.05)';
+			var circleArr = [];
+		
+			//线条：开始xy坐标，结束xy坐标，线条透明度
+			function Line (x, y, _x, _y, o) {
+				this.beginX = x,
+				this.beginY = y,
+				this.closeX = _x,
+				this.closeY = _y,
+				this.o = o;
+			}
+			//点：圆心xy坐标，半径，每帧移动xy的距离
+			function Circle (x, y, r, moveX, moveY) {
+				this.x = x,
+				this.y = y,
+				this.r = r,
+				this.moveX = moveX,
+				this.moveY = moveY;
+			}
+			//生成max和min之间的随机数
+			function num (max, _min) {
+				var min = arguments[1] || 0;
+				return Math.floor(Math.random()*(max-min+1)+min);
+			}
+			// 绘制原点
+			function drawCricle (cxt, x, y, r, moveX, moveY) {
+				var circle = new Circle(x, y, r, moveX, moveY)
+				cxt.beginPath()
+				cxt.arc(circle.x, circle.y, circle.r, 0, 2*Math.PI)
+				cxt.closePath()
+				cxt.fill();
+				return circle;
+			}
+			//绘制线条
+			function drawLine (cxt, x, y, _x, _y, o) {
+				var line = new Line(x, y, _x, _y, o)
+				cxt.beginPath()
+				cxt.strokeStyle = 'rgba(0,0,0,'+ o +')'
+				cxt.moveTo(line.beginX, line.beginY)
+				cxt.lineTo(line.closeX, line.closeY)
+				cxt.closePath()
+				cxt.stroke();
+		
+			}
+			//初始化生成原点
+			function init () {
+				circleArr = [];
+				for (var i = 0; i < POINT; i++) {
+					circleArr.push(drawCricle(context, num(WIDTH), num(HEIGHT), num(15, 2), num(10, -10)/40, num(10, -10)/40));
+				}
+				draw();
+			}
+		
+			//每帧绘制
+			function draw () {
+				context.clearRect(0,0,canvas.width, canvas.height);
+				for (var i = 0; i < POINT; i++) {
+					drawCricle(context, circleArr[i].x, circleArr[i].y, circleArr[i].r);
+				}
+				for (var i = 0; i < POINT; i++) {
+					for (var j = 0; j < POINT; j++) {
+						if (i + j < POINT) {
+							var A = Math.abs(circleArr[i+j].x - circleArr[i].x),
+								B = Math.abs(circleArr[i+j].y - circleArr[i].y);
+							var lineLength = Math.sqrt(A*A + B*B);
+							var C = 1/lineLength*7-0.009;
+							var lineOpacity = C > 0.03 ? 0.03 : C;
+							if (lineOpacity > 0) {
+								drawLine(context, circleArr[i].x, circleArr[i].y, circleArr[i+j].x, circleArr[i+j].y, lineOpacity);
+							}
+						}
+					}
+				}
+			}
+			
+			init();
+			setInterval(function () {
+				for (var i = 0; i < POINT; i++) {
+					var cir = circleArr[i];
+					cir.x += cir.moveX;
+					cir.y += cir.moveY;
+					if (cir.x > WIDTH) cir.x = 0;
+					else if (cir.x < 0) cir.x = WIDTH;
+					if (cir.y > HEIGHT) cir.y = 0;
+					else if (cir.y < 0) cir.y = HEIGHT;
+					
+				}
+				draw();
+			}, 16);
+		}
+
+		//调用执行
+		window.onload = function () {
+			show_canvas();
+		}
+//		window.onresize=function(){
+//			show_canvas();
+//      }  
+	</script>
+	</body>
+
+</html>

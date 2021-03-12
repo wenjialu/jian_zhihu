@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+        <title>简知乎</title>
+    </head>   
+    <body>
+        <form action="" method="post">
+            {{form.as_p}}
+            <!-- {{form.error_messages}} -->
+            {% csrf_token %}
+            <button type="submit">登录</button>
+          </form>
+    </body>    
+
+
+</html>
+   

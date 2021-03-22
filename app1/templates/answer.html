@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Answer</title>
+</head>
+<body>
+    <form action="/answer/" method="post">
+        <select name="issue">
+            {% for i in issues %}
+            <option value="{{i.id}}">{{i.title}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <textarea name="answer" rows="10" cols="90"></textarea>
+        {% csrf_token %}
+        <br>
+        <input name="anonymity" type="checkbox">匿名提问
+        <button type="submit">提交</button>
+    </form>
+</body>
+</html>

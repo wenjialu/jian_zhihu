@@ -14,13 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from app1.views import register, index_login
+from django.urls import path, re_path
+from app1.views import register, index_login, ask_question, answer, submit_comment
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
     # path(r'admin/app1/profile/', admin.site.urls),
     path(r'', register),
     path(r'login/', index_login, name="login"),
-    
+    path(r'register/', register, name="register"),
+    path(r'questions/', ask_question, name="ask_questions"),
+    path(r'questions/(.*)', ask_question, name="ask_questions"),
+    path(r'questions/...', ask_question, name="ask_questions"),
+    path(r'questions/?', ask_question, name="ask_questions"),
+    # path(r'answer/', answer, name="answer"),
+    # 在django2.0之后，需要用re_path函数才适合正则匹配。 (?P<username>re)
+    re_path(r'answer/(?P<issue_id>\d+)/$',answer, name="answer"),
+    re_path(r'comment/(?P<answer_id>\d+)/$',submit_comment, name="comment"),
 ]
